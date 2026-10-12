@@ -1,6 +1,28 @@
 ---
-// Astroのサーバーサイド（ビルド時）で環境変数を取得する
-const repoName = import.meta.env.PUBLIC_GITHUB_REPO || 'hilava999/tonefolio';
+//@ts-ignore
+import { execSync } from 'node:child_process';
+
+// 1. ビルド時にGitのリモートURLを自動取得して `owner/repo` を抽出する関数
+function getRepoFromGit(): string {
+  try {
+    // git config --get remote.origin.url でリモートURLを取得
+    const url = execSync('git config --get remote.origin.url', { encoding: 'utf-8' }).trim();
+    
+    // 例: https://github.com/owner/repo.git または git@github.com:owner/repo.git
+    // ここから owner/repo 部分を綺麗に抜き出す正規表現
+    const match = url.match(/github\.com[:/]([^/]+)\/([^/.]+)(?:\.git)?/i);
+    if (match && match[1] && match[2]) {
+      return `${match[1]}/${match[2]}`;
+    }
+  } catch (e) {
+    console.warn('GitリモートURLの取得に失敗しました。フォールバックを使用します。', e);
+  }
+  
+  // 万が一Git情報が取れなかった場合のフォールバック（自分のデフォルト）
+  return 'hilava999/tonefolio';
+}
+
+const repoName = getRepoFromGit();
 ---
 
 <!doctype html>
@@ -13,13 +35,13 @@ const repoName = import.meta.env.PUBLIC_GITHUB_REPO || 'hilava999/tonefolio';
 <body>
   <!-- Sveltia CMS を手動初期化するための設定スクリプト -->
   <script define:vars={{ repoName }}>
-    // Astroからビルド時の環境変数（repoName）を安全に受け取る
+    // ビルド時にGitから自動抽出されたリポジトリ名がここに埋め込まれます
     window.CMS_CONFIG = {
       backend: {
         name: 'github',
-        repo: repoName, // ← ここに自動で埋め込まれる！
+        repo: repoName, 
         branch: 'main',
-        base_url: ' https://sveltia-cms-auth.migomasu356.workers.dev',
+        base_url: 'https://sveltia-cms-auth.migomasu356.workers.dev',
       },
     };
   </script>
