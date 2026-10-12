@@ -1,0 +1,29 @@
+{
+  "siteTitle": "Site Title",
+  "subTitle": "Here is sub title.",
+  "desc": "ここにサイトの概要を入力します。",
+  "favicon": "/favicon.png",
+  "lastUpdate": "2026-10-12",
+  "ogImage": "/ogImage.png",
+  "top_slides": [
+    "/images/top_slides/00.png",
+    "/images/top_slides/02.png"
+  ],
+  "about_cover": "/images/about_cover.png",
+  "about_desc": "ここにAboutページの文章",
+  "prof": {
+    "author": "Your Name",
+    "bio": "プロフィールを入力"
+  },
+  "sns": [
+    {
+      "platform": "x",
+      "label": "X",
+      "url": "https://x.com/"
+    }
+  ],
+  "theme": {
+    "accent_color": "#ff6b6b",
+    "font": "sans"
+  }
+}

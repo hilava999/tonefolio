@@ -1,0 +1,101 @@
+---
+import { getEntry } from 'astro:content';
+
+import Menu from '../components/menu.astro';
+import SeoHead from '../components/SeoHead.astro';
+
+import '../css/reset.css';
+import '../css/base.css';
+
+const currentYear = new Date().getFullYear();
+
+// 1. データ取得
+// サイト全体設定 (settings) を取得
+const settingsEntry = await getEntry('settings', 'index');
+const settings = settingsEntry?.data;
+
+const accentColor = settings?.theme?.accent_color || '#ff6b6b';
+const fontFamily = settings?.theme?.font === 'serif' 
+  ? "'Shippori Mincho', serif"
+  : "'Noto Sans JP', sans-serif";
+
+// 2. 画像の動的インポート準備 (Astro <Image /> 用)
+// const imageGlob = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/**/*.{jpeg,jpg,png,gif,webp}');
+
+// // 画像パス変換関数
+// const getMetadata = (path: string) => {
+//   if (!path) return null;
+//   const formattedPath = path.startsWith('@/') 
+//     ? path.replace('@/', '/src/') 
+//     : path.startsWith('src/') 
+//     ? '/' + path 
+//     : path;
+  
+//   return imageGlob[formattedPath] ? imageGlob[formattedPath]() : null;
+// };
+
+// // カバー画像のメタデータを取得
+// const aboutCoverMeta = settings?.about_cover ? getMetadata(settings.about_cover) : null;
+
+// settings から sns 配列を取得
+const snsList = settings?.sns || [];
+
+const pageTitle = `About | ${settings?.siteTitle || 'イラストサイト'}`;
+const pageDesc = settings?.desc || 'サイトの説明文';
+---
+
+<html lang="ja">
+  <head>
+    <link rel="icon" type="image/svg+xml" href={settings?.favicon || '/favicon.svg'} />
+    <SeoHead title={pageTitle} description={pageDesc} type="article" />
+  </head>
+
+  <body style={`--accent: ${accentColor}; font-family: ${fontFamily};`}>
+
+    <div class="wpapper">
+        <Menu />
+        <div class="header">
+            <a href="/"><h1 class="page-top">{settings?.siteTitle}</h1></a>
+        </div>
+        <div class="main">
+            <div class="main-content">
+                <h2 class="page-title">About</h2>
+                <div class="about-cover">
+                    {settings?.about_cover && (
+                        <img src={settings.about_cover} alt="カバー画像" class="about-cover-img" />
+                    )}
+                </div>
+                <div class="contents">
+                    <h2 class="h2-a">About This Site</h2>
+                    <p>{settings?.about_desc}</p>
+                </div>
+                <div class="contents">
+                    <h2 class="h2-a">About {settings?.prof.author}</h2>
+                    <p>{settings?.prof.bio}</p>
+                    {snsList.length > 0 && (
+                    <div class="sns-container">
+                        <ul class="sns-list">
+                        {snsList.map((item) => (
+                            <li class="sns-item">
+                                <a
+                                    href={item.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class={`sns-link sns-${item.platform}`}
+                                >
+                                    <span class="sns-label">{item.label || item.platform}</span>
+                                </a>
+                            </li>
+                        ))}
+                        </ul>
+                    </div>
+                    )}
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            © {currentYear} {settings?.prof.author}.
+        </div>
+    </div>
+  </body>
+</html>

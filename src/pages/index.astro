@@ -1,0 +1,104 @@
+---
+import { getEntry } from 'astro:content';
+
+import SeoHead from '../components/SeoHead.astro';
+
+import '../css/reset.css';
+import '../css/base.css';
+
+const currentYear = new Date().getFullYear();
+
+// 1. データ取得
+// サイト全体設定 (settings) を取得
+const settingsEntry = await getEntry('settings', 'index');
+const settings = settingsEntry?.data;
+
+// スライド画像パスの調整用ヘルパー関数
+// (例: "src/assets/images/sample.jpg" -> "/src/assets/images/sample.jpg" に変換してブラウザから見れるようにする)
+const getImageUrl = (path: string) => {
+  if (!path) return '';
+  // すでに http から始まる場合や / で始まる場合はそのまま
+  if (path.startsWith('http') || path.startsWith('/')) {
+    return path;
+  }
+  // "src/..." や "assets/..." で始まっている場合の調整
+  return '/' + path.replace(/^\/+/, '');
+};
+
+// スライド画像
+const topSlides = settings?.top_slides || [];
+
+// テーマカラー
+const accentColor = settings?.theme?.accent_color || '#4a90e2';
+const fontFamily = settings?.theme?.font === 'serif' 
+  ? "'Shippori Mincho', serif"
+  : "'Noto Sans JP', sans-serif";
+
+const pageTitle = `Home | ${settings?.siteTitle || 'イラストサイト'}`;
+const pageDesc = settings?.desc || 'サイトの説明文';
+---
+
+<html lang="ja">
+  <head>
+    <link rel="icon" type="image/svg+xml" href={settings?.favicon || '/favicon.svg'} />
+    <SeoHead title={pageTitle} description={pageDesc} />
+    <!-- SwiperのCSS（CDN経由またはnpm経由） -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  </head>
+
+  <body style={`--accent: ${accentColor}; font-family: ${fontFamily};`}>
+
+    <div class="wpapper">
+      <div class="hero-header">
+        <div class="swiper main-swiper">
+          <div class="swiper-wrapper">
+           {topSlides.map((slidePath) => {
+              const imageUrl = getImageUrl(slidePath);
+              return (
+                <div class="swiper-slide">
+                  <img src={imageUrl} alt="Top Slide" class="slide-img" />
+                </div>
+              );
+            })}
+          </div>
+          <div class="white"></div>
+        </div>
+      </div>
+      <div class="top-main">
+        <div class="top-main-container">
+          <h1 class="top-site-title">{settings?.siteTitle}</h1>
+          <h3 class="subtitle">{settings?.subTitle}</h3>
+          <p>LastUpdate：{settings?.lastUpdate}</p>
+          <ul class="top-menu">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/works">Works</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="top-footer">
+        © {currentYear} {settings?.prof.author}.
+      </div>
+    </div>
+    <!-- SwiperのJS起動用スクリプト -->
+    <script>
+      import Swiper from 'swiper';
+      import { Navigation, Pagination, Autoplay,EffectFade } from 'swiper/modules';
+
+      document.addEventListener('DOMContentLoaded', () => {
+        new Swiper('.main-swiper', {
+          modules: [Navigation, Pagination, Autoplay,EffectFade],
+          effect: 'fade',
+				  fadeEffect: {
+            	crossFade: true, 
+        		},
+          loop: true,
+          autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

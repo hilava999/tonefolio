@@ -1,0 +1,26 @@
+{
+  "name": "",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "generate-types": "wrangler types"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.3.4",
+    "astro": "^7.3.8",
+    "minimasonry": "^1.3.2",
+    "photoswipe": "^5.4.4",
+    "swiper": "^14.3.0",
+    "wrangler": "^4.149.0"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.105.1"
+  }
+}

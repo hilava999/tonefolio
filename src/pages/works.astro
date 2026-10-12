@@ -1,0 +1,191 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+
+import Menu from '../components/menu.astro';
+import SeoHead from '../components/SeoHead.astro';
+
+import '../css/reset.css';
+import '../css/base.css';
+
+// 1. サイト設定 (settings) を取得（タイトルやテーマカラー用）
+const settingsEntry = await getEntry('settings', 'index');
+const settings = settingsEntry?.data;
+
+const accentColor = settings?.theme?.accent_color || '#4a90e2';
+const fontFamily = settings?.theme?.font === 'serif' 
+  ? "'Shippori Mincho', serif"
+  : "'Noto Sans JP', sans-serif";
+
+// 2. works コレクションを取得して最新順（降順）にソート
+const allWorks = await getCollection('work');
+
+// 3. 画像の動的インポート準備 (Astro <Image /> 用)
+const imageGlob = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/**/*.{jpeg,jpg,png,gif,webp}');
+
+const getMetadata = (path: string) => {
+  if (!path) return null;
+  const formattedPath = path.startsWith('@/') 
+    ? path.replace('@/', '/src/') 
+    : path.startsWith('src/') 
+    ? '/' + path 
+    : path;
+  
+  return imageGlob[formattedPath] ? imageGlob[formattedPath]() : null;
+};
+
+// 4. 全作品からタグと件数を集計する
+const tagCounts = allWorks.reduce((acc, work) => {
+  const tags = work.data.tags || [];
+  tags.forEach((tag) => {
+    acc[tag] = (acc[tag] || 0) + 1;
+  });
+  return acc;
+}, {} as Record<string, number>);
+
+// タグ一覧の配列を作成
+const allTags = Object.entries(tagCounts).map(([name, count]) => ({
+  name,
+  count,
+}));
+
+// 最新順にソート
+const sortedWorks = allWorks.sort(
+  (a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+
+const pageTitle = `Works | ${settings?.siteTitle || 'イラストサイト'}`;
+const pageDesc = settings?.desc || 'サイトの説明文';
+---
+
+<html lang="ja">
+  <head>
+    <link rel="icon" type="image/svg+xml" href={settings?.favicon || '/favicon.svg'} />
+    <SeoHead title={pageTitle} description={pageDesc} type="article"/>
+  </head>
+
+  <body style={`--accent: ${accentColor}; font-family: ${fontFamily};`}>
+    <div class="wrapper">
+      <Menu />
+      <div class="header">
+            <a href="/"><h1 class="page-top">{settings?.siteTitle}</h1></a>
+        </div>
+
+      <main class="w-main">
+        <h2 class="page-title">Works</h2>
+        <div class="work-wrapper">
+            <!-- タグフィルターリスト -->
+            {allTags.length > 0 && (
+                <div class="tag-container">
+                <ul class="tag-list">
+                    {/* 全件表示ボタン */}
+                    <li class="tag-item">
+                      <a href="#" class="tag-chip active" data-tag="">
+                          All ({allWorks.length})
+                      </a>
+                    </li>
+
+                    {/* 各タグのリスト */}
+                    {allTags.map((tag) => (
+                      <li class="tag-item">
+                        <a href="#" class="tag-chip" data-tag={tag.name}>
+                            {tag.name} ({tag.count})
+                        </a>
+                      </li>
+                    ))}
+                </ul>
+                </div>
+            )}
+
+            {/* 作品一覧グリッド（MiniMasonry.js で動的に絞り込み） */}
+            <div class="works-container" id="works-grid">
+            {sortedWorks.map((work) => {
+                const firstImgPath = work.data.imgs?.[0] || '';
+                const thumbnailMeta = getMetadata(firstImgPath);
+
+                return (
+                <article class="work-card" data-tags={JSON.stringify(work.data.tags || [])}>
+                    <a href={`/work/${work.id}`} class="work-link">
+                    <div class={`thumbnail-wrapper ${work.data.nsfw ? 'is-nsfw' : ''}`}>
+                        {work.data.nsfw && <span class="badge-nsfw">NSFW</span>}
+
+                        {thumbnailMeta ? (
+                            <Image src={thumbnailMeta} alt={work.data.title} class="work-thumb" />
+                        ) : firstImgPath ? (
+                            <img src={firstImgPath} alt={work.data.title} class="work-thumb" />
+                        ) : (
+                            <div class="no-image">No Image</div>
+                        )}
+                        </div>
+                    </a>
+                    {work.data.imgs.length >= 2 && (
+                        <span class="img-badge">{work.data.imgs.length}</span>
+                    )}
+                </article>
+                );
+            })}
+            </div>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <p>&copy; {new Date().getFullYear()} {settings?.prof?.author || settings?.siteTitle}.</p>
+      </footer>
+    </div>
+    <script>
+        import MiniMasonry from 'minimasonry';
+        window.addEventListener('load', () => {
+            const masonry = new MiniMasonry({
+                container: '.works-container', 
+                baseWidth: 300,
+                gutter: 20,
+                surroundingGutter: true,
+                minify: true, 
+            });
+
+            // タグフィルターの動作処理
+            const tagChips = document.querySelectorAll('.tag-chip');
+            const workCards = document.querySelectorAll('.work-card');
+
+            tagChips.forEach(chip => {
+                chip.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const selectedTag = chip.getAttribute('data-tag');
+
+                    // アクティブスタイルの切り替え
+                    tagChips.forEach(c => c.classList.remove('active'));
+                    chip.classList.add('active');
+
+                    // カードの表示/非表示を切り替え
+                    workCards.forEach(card => {
+                        const tags = JSON.parse(card.getAttribute('data-tags') || '[]');
+                        if (selectedTag === "" || tags.includes(selectedTag)) {
+                            (card as HTMLElement).style.display = '';
+                        } else {
+                            (card as HTMLElement).style.display = 'none';
+                        }
+                    });
+
+                    // Masonryの位置を再計算
+                    masonry.layout();
+                });
+            });
+        });
+    </script>
+  </body>
+</html>
+
+<style>
+    .badge-nsfw {
+        position: absolute;
+        top: 8px;
+        right: 40px;
+        background: #e53935;
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        z-index: 1;
+      }
+</style>

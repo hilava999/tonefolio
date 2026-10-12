@@ -1,0 +1,345 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Shippori+Mincho&display=swap');
+
+html {
+    font-family: var(--font-family, 'Noto Sans JP'), sans-serif;
+    font-weight: 400;
+    color:#444;
+}
+
+/* 明朝体が選ばれた場合のクラスや切り替え用 */
+body[data-font="serif"] {
+  font-family: "Shippori Mincho", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+a{
+    text-decoration: none;
+    color:#444;
+}
+
+.wrapper {
+    width: 100%;
+    max-height: 100vh;
+    position: relative;
+}
+
+.hero-header {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.main-swiper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* 下の画像へのクリックを邪魔しない */
+
+    /* SVGデータURIで極小のドットパターンを生成 (サイズ4px、ドット半径1px) */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6' viewBox='0 0 4 4'%3E%3Ccircle cx='2' cy='2' r='1' fill='%23000000' opacity='0.3'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+
+    /* トーンの馴染ませ方（mix-blend-mode） */
+    mix-blend-mode: multiply; /* 乗算（暗いトーン向け） */
+    opacity: 0.65;          /* 全体の濃さ調整 */
+  }
+
+.main-swiper {
+    position: relative;
+}
+
+.white {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 20%;
+    height: 100vh;
+    backdrop-filter: blur(12px);
+    background-color: rgba(255,255,255,0.75);
+    z-index: 999;
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    opacity: 0.55;
+}
+
+
+.top-main-container {
+    position: absolute;
+    top:50%;
+    left: 8%;
+    transform: translateY(-50%);
+    z-index: 9999;
+}
+
+.top-menu {
+    display: flex;
+    list-style: none;
+    margin-top: 50px;
+}
+
+.top-menu li a {
+    margin-right: 20px;
+    font-size: 1.35rem;
+    transition: opacity 0.3s, color 0.3s;
+}
+
+.top-menu li a:hover {
+    opacity: 0.6;
+}
+
+.top-site-title {
+    font-size: 6.5rem;
+    letter-spacing: 0.07em;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+.top-footer {
+    position: absolute;
+    bottom: 3%;
+    right: 2%;
+    z-index: 10;
+}
+
+.page-top {
+    display: inline-block;
+    font-size: 2rem;
+    padding: 1.5rem 3rem;
+}
+
+.main {
+    margin-top: 200px;
+    width: 100%;
+}
+
+.main-content {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-cover img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+.page-title {
+    font-size: 5rem;
+    letter-spacing: 0.07em;
+}
+
+.contents {
+    margin: 3rem 0;
+    padding: 0 3rem;
+}
+
+.h2-a {
+    font-size: 2.5rem;
+    border-left: 9px solid var(--accent);
+    padding-left: 15px;
+}
+
+.contents p {
+    padding: 2rem 0;
+}
+
+.footer {
+    padding: 7rem 0 2rem;
+    text-align: center;
+}
+
+.sns-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sns-item {
+    background-color: var(--accent);
+    margin-right: 10px;
+    padding: 1rem 2rem;
+    transition: opacity 0.3s, color 0.3s;
+    border-radius: 12px;
+}
+
+.sns-item  a{
+    color: #fff;
+}
+
+.sns-item:hover {
+    opacity: 0.6;
+}
+
+.work-wrapper {
+    padding-top: 50px;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    margin: 0 auto;
+    gap:80px;
+}
+
+.w-main {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 200px;
+}
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tag-item {
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    margin: 5px 7px;
+    border-radius: 8px;
+}
+
+.work-card {
+    position: absolute;
+	overflow: hidden;
+}
+
+.work-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.works-container {
+    position: relative;
+	display: block;
+    padding-bottom: 5em;
+}
+
+.post-main {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    margin-top: 150px;
+}
+
+/* ぼかし画像用のコンテナ（枠外のはみ出し防止） */
+  .thumbnail-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px; /* カードの角丸に合わせる */
+}
+
+/* 枚数バッジのスタイル */
+.work-card .img-badge {
+	position: absolute;
+	top: 8px; /* 上からの位置（お好みで調整してください） */
+	right: 8px; /* 右からの位置 */
+	background-color: rgba(0, 0, 0, 0.6); /* ちょっと透ける黒 */
+	color: #ffffff;
+	font-size: 0.8rem;
+	font-weight: bold;
+	padding: 4px 8px;
+	padding-right: 10px;
+	border-radius: 999px; /* ほんのり角丸（丸くしたいなら 999px） */
+	z-index: 10;
+	pointer-events: none; /* バッジがクリックの邪魔をしないようにする */
+}
+
+/* NSFWの場合のぼかし処理 */
+  .thumbnail-wrapper.is-nsfw .work-thumb {
+    filter: blur(12px) brightness(0.8); /* 強めのぼかし + 少し暗く */
+    transform: scale(1.1); /* ぼかしで端が白く透けるのを防ぐ拡大処理 */
+    transition: filter 0.3s ease, transform 0.3s ease;
+  }
+
+  /* （お好みで）カードにホバーしたときに少しだけぼかしを弱める演出 */
+  /* 完全に見せたくない場合は以下の hover 処理は削除してください */
+  .work-card:hover .thumbnail-wrapper.is-nsfw .work-thumb {
+    filter: blur(6px) brightness(0.9);
+  }
+
+/* カードにホバーしたときの浮き上がり＆拡大演出 */
+.work-card {
+    position: absolute;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease; /* スムーズなアニメーション設定 */
+}
+
+/* ホバー時に「チョン」と少し上に浮き上がって影が深くなる */
+.work-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+    z-index: 5; /* 浮いたときに他のカードに重なっても手前に表示されるように */
+}
+
+/* サムネイル画像自体も少しだけズームさせる場合（お好みで） */
+.thumbnail-wrapper img,
+.thumbnail-wrapper .work-thumb {
+    transition: transform 0.4s ease;
+}
+
+.work-card:hover .thumbnail-wrapper img,
+.work-card:hover .thumbnail-wrapper .work-thumb {
+    transform: scale(1.03); /* ほんの少し拡大 */
+}
+
+  /*レスポンシブ*/
+@media (max-width: 800px) {
+    .top-site-title {
+        font-size: clamp(18px,11vw,70px);
+    }
+    .subtitle {
+        font-size: clamp(15px,3vw,30px);
+    }
+
+    .white {
+        display: none;
+    }
+
+    .top-main-container {
+        left: 0;
+        padding: 3rem 3rem;
+        width: 100%;
+        background-color: rgba(255,255,255,0.75);
+    }
+
+    .work-wrapper {
+        display: block;
+    }
+}
+
+@media (max-width: 500px) {
+    .page-top {
+        padding: 0.5rem 2rem;
+    }
+
+    .contents {
+        padding: 0 10px;
+    }
+
+    .h2-a {
+    font-size: clamp(15px,9vw,30px)
+    }
+
+    .about-cover img {
+        height: 300px;
+    }
+    .sns-item {
+        padding: 10px 20px;
+        margin: 5px 5px;
+    }
+    .works-container {
+        margin: 0 auto;
+    }
+}
