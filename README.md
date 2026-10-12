@@ -3,8 +3,6 @@
 
 An Astro theme for illustration portfolio and gallery websites.
 
-[![Deploy to Cloudflare Pages](https://deploy.cloudflare.com/button.svg)](https://pages.cloudflare.com/deploys/?repo=https://github.com/hilava999/tonefolio)
-
 [🖥️ デモサイト](https://demo-tonefolio.pages.dev/)
 
 ![トップページ](./doc/00.png)
