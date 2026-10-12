@@ -1,3 +1,8 @@
+---
+// Astroのサーバーサイド（ビルド時）で環境変数を取得する
+const repoName = import.meta.env.PUBLIC_GITHUB_REPO || 'hilava999/tonefolio';
+---
+
 <!doctype html>
 <html>
 <head>
@@ -6,6 +11,18 @@
   <title>ToneFolio CMS</title>
 </head>
 <body>
+  <!-- Sveltia CMS を手動初期化するための設定スクリプト -->
+  <script define:vars={{ repoName }}>
+    // Astroからビルド時の環境変数（repoName）を安全に受け取る
+    window.CMS_CONFIG = {
+      backend: {
+        name: 'github',
+        repo: repoName, // ← ここに自動で埋め込まれる！
+        branch: 'main',
+        base_url: ' https://sveltia-cms-auth.migomasu356.workers.dev',
+      },
+    };
+  </script>
   <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" type="module"></script>
 </body>
 </html>
