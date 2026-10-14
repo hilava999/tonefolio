@@ -165,10 +165,8 @@ const ogpImage = work.imgs?.[0] || '/ogImage.png';
             {work.tags && work.tags.length > 0 && (
               <ul class="tag-list">
                 {work.tags.map((tag) => (
-                  <li>
-                    <a href={`/works?tag=${encodeURIComponent(tag)}`} class="tag-chip">
+                  <li class="tag-chip">
                       #{tag}
-                    </a>
                   </li>
                 ))}
               </ul>
