@@ -3,21 +3,26 @@
 
 An Astro theme for illustration portfolio and gallery websites.
 
-[🖥️ デモサイト](https://demo-tonefolio.pages.dev/)
+[English Translation is here](README.en.md)
+
+[🖥️ デモサイト](https://demo-tonefolio.pages.dev/) | [📕マニュアルサイト](https://hilava.gitbook.io/tonefolio/)
 
 ![トップページ](./doc/00.png)
 
 ## 💡 コンセプト
-面倒なサーバー管理やコードの知識は一切不要。ブログ感覚で手軽に作品を追加・更新できるシステムに加え、R-18作品の自動ぼかしやワンクッションなど、イラストサイトに欠かせない「配慮」を標準搭載しています。サーバー代を完全無料に抑えながら、自身の創作に100%集中できる環境を提供します。是非、デモサイトをご確認ください！
+面倒なサーバー管理やコードの知識は一切不要。ブログ感覚で手軽に作品を追加・更新できるシステムに加え、R-18作品の自動ぼかしやワンクッションなど、イラストサイトに欠かせない「配慮」を標準搭載しています。サーバー代を完全無料に抑えながら、自身の創作に100%集中できる環境を提供します。是非、[デモサイト](https://demo-tonefolio.pages.dev/)をご確認ください！
 
 ## ✨️ 特徴
-- ワンボタンでサイトを立ち上げられる
 - コード入力不要で簡単更新（Sveltia CMS対応）
 - Masonryレイアウト
 - PhotoSwipeによる画像拡大表示
 - タグ絞り込み機能
 - OGP対応 / レスポンシブ対応
 - NSFW（R-18）ワンクッション機能
+
+## 🚀Get Started
+Use this templateからリポジトリをコピーしてはじめましょう！  
+詳しくは[マニュアルサイト](https://hilava.gitbook.io/tonefolio/)をご確認くださいませ。
 
 ## 📷️ スクリーンショット
 ### トップページ
@@ -31,9 +36,9 @@ An Astro theme for illustration portfolio and gallery websites.
 
 ## 🙏 技術スタック / 使用ライブラリ
 - [Astro](https://astro.build/)
-- [Sveltia CMS](https://sveltia.github.io/sveltia-cms/)
+- [Sveltia CMS](https://sveltiacms.app/en/)
 - [PhotoSwipe](https://photoswipe.com/)
-- [MiniMasonry](https://www.minimasonry.com/)
+- [MiniMasonry.js](https://spope.github.io/MiniMasonry.js/)
 - [Swiper](https://swiperjs.com/)
 
 ## 🐞 不具合・要望
