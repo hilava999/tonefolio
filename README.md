@@ -3,12 +3,10 @@
 
 An Astro theme for illustration portfolio and gallery websites.
 
-[🖥️ デモサイト](https://demo-tonefolio.pages.dev/) | [📕マニュアルサイト](https://hilava.gitbook.io/tonefolio/)
+[🖥️ デモサイト](https://demo-tonefolio.pages.dev/)
 
 ![トップページ](./doc/00.png)
 
-## 💡 コンセプト
-面倒なサーバー管理やコードの知識は一切不要。ブログ感覚で手軽に作品を追加・更新できるシステムを標準搭載しています。サーバー代を完全無料に抑えながら、自身の創作に100%集中できる環境を提供します。是非、[デモサイト](https://demo-tonefolio.pages.dev/)をご確認ください！
 
 ## ✨️ 特徴
 - コード入力不要で簡単更新（Sveltia CMS対応）
@@ -19,8 +17,7 @@ An Astro theme for illustration portfolio and gallery websites.
 - NSFW（R-18）ワンクッション機能
 
 ## 🚀Get Started
-Use this templateからリポジトリをコピーしてはじめましょう！  
-詳しくは[マニュアルサイト](https://hilava.gitbook.io/tonefolio/)をご確認くださいませ。
+Use this templateからリポジトリをコピーしてはじめましょう！
 
 ## 📷️ スクリーンショット
 ### トップページ
