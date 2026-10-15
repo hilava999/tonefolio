@@ -3,14 +3,12 @@
 
 An Astro theme for illustration portfolio and gallery websites.
 
-[English Translation is here](README.en.md)
-
 [🖥️ デモサイト](https://demo-tonefolio.pages.dev/) | [📕マニュアルサイト](https://hilava.gitbook.io/tonefolio/)
 
 ![トップページ](./doc/00.png)
 
 ## 💡 コンセプト
-面倒なサーバー管理やコードの知識は一切不要。ブログ感覚で手軽に作品を追加・更新できるシステムに加え、R-18作品の自動ぼかしやワンクッションなど、イラストサイトに欠かせない「配慮」を標準搭載しています。サーバー代を完全無料に抑えながら、自身の創作に100%集中できる環境を提供します。是非、[デモサイト](https://demo-tonefolio.pages.dev/)をご確認ください！
+面倒なサーバー管理やコードの知識は一切不要。ブログ感覚で手軽に作品を追加・更新できるシステムを標準搭載しています。サーバー代を完全無料に抑えながら、自身の創作に100%集中できる環境を提供します。是非、[デモサイト](https://demo-tonefolio.pages.dev/)をご確認ください！
 
 ## ✨️ 特徴
 - コード入力不要で簡単更新（Sveltia CMS対応）

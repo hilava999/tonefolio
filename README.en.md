@@ -6,10 +6,6 @@ A free portfolio and illustration website theme built by an artist, for artists.
 
 ![Top Page](./doc/00.png)
 
-## 💡 Concept
-
-No server management or coding knowledge required. In addition to a user-friendly system that lets you add and update artwork like a blog, ToneFolio comes with essential features tailored for illustration sites out-of-the-box, such as automatic blurring and content-warning cushions for NSFW/R-18 content. Keep your hosting costs completely free while providing an environment where you can focus 100% on your creative work. Check out the [Live Demo](https://demo-tonefolio.pages.dev/)!
-
 ## ✨️ Features
 
 - **Easy Updates without Coding** (Powered by Sveltia CMS)
