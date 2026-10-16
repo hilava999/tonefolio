@@ -1,7 +1,7 @@
 backend:
   name: github
-  repo: "{{owner}}/{{repo}}"
-  branch: main                # または master
+  repo: "{{USER}}/{{repository}}"
+  branch: main
   base_url: https://sveltia-cms-auth.migomasu356.workers.dev
 
 app_title: "ToneFolio CMS"
@@ -9,7 +9,13 @@ app_title: "ToneFolio CMS"
 media_folder: "src/assets/images"
 public_folder: "/src/assets/images"
 
-local_backend: true
+media_libraries:
+  cloudflare_r2:
+    account_id: 
+    bucket: 
+    access_key_id: 
+    secret_access_key: 
+    public_url: 
 
 collections:
   - name: "work"

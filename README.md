@@ -7,6 +7,7 @@ An Astro theme for illustration portfolio and gallery websites.
 
 ![トップページ](./doc/00.png)
 
+※マニュアルは整備中です
 
 ## ✨️ 特徴
 - コード入力不要で簡単更新（Sveltia CMS対応）
@@ -44,3 +45,8 @@ Use this templateからリポジトリをコピーしてはじめましょう！
 
 ## ⭐️ 最後に
 このテーマが皆さんの創作活動のお役に立てれば嬉しいです。
+
+## 更新履歴
+### 2026年10月16日
+- CloudflareR2に対応
+- ギャラリーページ・作品詳細ページの画像表示ロジック変更

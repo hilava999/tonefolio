@@ -23,7 +23,7 @@ const allWorks = await getCollection('work');
 // 3. 画像の動的インポート準備 (Astro <Image /> 用)
 const imageGlob = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/**/*.{jpeg,jpg,png,gif,webp}');
 
-const getMetadata = (path: string) => {
+const getMetadata = async (path: string) => {
   if (!path) return null;
   const formattedPath = path.startsWith('@/') 
     ? path.replace('@/', '/src/') 
@@ -31,7 +31,11 @@ const getMetadata = (path: string) => {
     ? '/' + path 
     : path;
   
-  return imageGlob[formattedPath] ? imageGlob[formattedPath]() : null;
+  if (imageGlob[formattedPath]) {
+    const mod = await imageGlob[formattedPath]();
+    return mod.default; // { src, width, height } が入った高機能オブジェクトを取得
+  }
+  return null;
 };
 
 // 4. 全作品からタグと件数を集計する
@@ -99,19 +103,25 @@ const pageDesc = settings?.desc || 'サイトの説明文';
 
             {/* 作品一覧グリッド（MiniMasonry.js で動的に絞り込み） */}
             <div class="works-container" id="works-grid">
-            {sortedWorks.map((work) => {
+              {sortedWorks.map(async (work) => {
                 const firstImgPath = work.data.imgs?.[0] || '';
-                const thumbnailMeta = getMetadata(firstImgPath);
+                const isExternal = firstImgPath.startsWith('http');
+                const thumbnailMeta = isExternal ? null : await getMetadata(firstImgPath);
 
                 return (
                 <article class="work-card" data-tags={JSON.stringify(work.data.tags || [])}>
                     <a href={`/work/${work.id}`} class="work-link">
                     <div class={`thumbnail-wrapper ${work.data.nsfw ? 'is-nsfw' : ''}`}>
                         {work.data.nsfw && <span class="badge-nsfw">NSFW</span>}
-
-                        {thumbnailMeta ? (
+                        
+                        {isExternal ? (
+                            /* パターン1：R2（外部URL）の画像を表示 */
+                            <img src={firstImgPath} alt={work.data.title} class="work-thumb" />
+                        ) : thumbnailMeta ? (
+                            /* パターン2：GitHub（ローカル）に元々ある過去の画像を表示 */
                             <Image src={thumbnailMeta} alt={work.data.title} class="work-thumb" />
                         ) : firstImgPath ? (
+                            /* パターン3：どちらも見つからないがパスだけある場合 */
                             <img src={firstImgPath} alt={work.data.title} class="work-thumb" />
                         ) : (
                             <div class="no-image">No Image</div>

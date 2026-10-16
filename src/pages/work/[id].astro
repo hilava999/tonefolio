@@ -99,10 +99,20 @@ const ogpImage = work.imgs?.[0] || '/ogImage.png';
               </summary>
               <div class="image-gallery" id="my-gallery">
                 {work.imgs.map(async (imgPath, index) => {
-                  const imgMeta = await getMetadata(imgPath);
+                  // 画像パスが外部URL（httpから始まる）の場合は、ローカル用メタデータ取得をスキップ
+                  const isExternal = imgPath.startsWith('http');
+                  const imgMeta = isExternal ? null : await getMetadata(imgPath);
+
                   return (
                     <div class="image-item">
-                      {imgMeta ? (
+                      {isExternal ? (
+                        /* ⭕ パターン1：Cloudflare R2（外部URL）の画像表示 */
+                        /* ※PhotoSwipeは、横幅・縦幅が指定されていない場合、自動的に実際の画像サイズを取得して動いてくれます */
+                        <a href={imgPath} target="_blank" rel="noreferrer">
+                          <img src={imgPath} alt={`${work.title} - ${index + 1}`} class="detail-img" />
+                        </a>
+                      ) : imgMeta ? (
+                        /* ⭕ パターン2：ローカルに元々ある過去の画像表示 */
                         <a
                           href={imgMeta.src}
                           data-pswp-width={imgMeta.width}
@@ -117,6 +127,7 @@ const ogpImage = work.imgs?.[0] || '/ogImage.png';
                           />
                         </a>
                       ) : (
+                        /* ⭕ パターン3：画像パスだけがあってどちらも見つからない場合 */
                         <img src={imgPath} alt={`${work.title} - ${index + 1}`} class="detail-img" />
                       )}
                     </div>
@@ -128,10 +139,18 @@ const ogpImage = work.imgs?.[0] || '/ogImage.png';
             /* 通常作品のギャラリー表示部分 */
             <div class="image-gallery" id="my-gallery">
               {work.imgs.map(async (imgPath, index) => {
-                const imgMeta = await getMetadata(imgPath);
+                const isExternal = imgPath.startsWith('http');
+                const imgMeta = isExternal ? null : await getMetadata(imgPath);
+
                 return (
                   <div class="image-item">
-                    {imgMeta ? (
+                    {isExternal ? (
+                      /* ⭕ パターン1：Cloudflare R2（外部URL）の画像表示 */
+                      <a href={imgPath} target="_blank" rel="noreferrer">
+                        <img src={imgPath} alt={`${work.title} - ${index + 1}`} class="detail-img" />
+                      </a>
+                    ) : imgMeta ? (
+                      /* ⭕ パターン2：ローカルに元々ある過去の画像表示 */
                       <a
                         href={imgMeta.src}
                         data-pswp-width={imgMeta.width}
@@ -146,6 +165,7 @@ const ogpImage = work.imgs?.[0] || '/ogImage.png';
                         />
                       </a>
                     ) : (
+                      /* ⭕ パターン3：画像パスだけがあってどちらも見つからない場合 */
                       <img src={imgPath} alt={`${work.title} - ${index + 1}`} class="detail-img" />
                     )}
                   </div>
@@ -165,7 +185,7 @@ const ogpImage = work.imgs?.[0] || '/ogImage.png';
             {work.tags && work.tags.length > 0 && (
               <ul class="tag-list">
                 {work.tags.map((tag) => (
-                  <li class="tag-chip">
+                  <li>
                       #{tag}
                   </li>
                 ))}

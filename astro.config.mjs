@@ -2,8 +2,8 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
+  site:'https://example.com',
   devToolbar: {
     enabled: false
   },
-  // output: 'server' を削除（デフォルトが静的ビルドになります）
 });
