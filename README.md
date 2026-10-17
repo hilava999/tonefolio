@@ -3,9 +3,9 @@
 
 An Astro theme for illustration portfolio and gallery websites.
 
-[🖥️ デモサイト](https://demo-tonefolio.pages.dev/)
+[🖥️ LiveDemo](https://tonefolio.hilavaarts.link/)
 
-![トップページ](./doc/00.png)
+![トップページ](./doc/00.jpg)
 
 ※マニュアルは整備中です
 
@@ -20,15 +20,15 @@ An Astro theme for illustration portfolio and gallery websites.
 ## 🚀Get Started
 Use this templateからリポジトリをコピーしてはじめましょう！
 
-## 📷️ スクリーンショット
+## 📷️ スクリーンショット(デモサイト)
 ### トップページ
-![トップページ](./doc/00.png)
+![トップページ](./doc/00.jpg)
 
 ### ギャラリーページ
-![ギャラリーページ](./doc/01.png)
+![ギャラリーページ](./doc/01.jpg)
 
 ### 作品詳細ページ
-![作品詳細ページ](./doc/02.png)
+![作品詳細ページ](./doc/02.jpg)
 
 ## 🙏 技術スタック / 使用ライブラリ
 - [Astro](https://astro.build/)
@@ -46,7 +46,18 @@ Use this templateからリポジトリをコピーしてはじめましょう！
 ## ⭐️ 最後に
 このテーマが皆さんの創作活動のお役に立てれば嬉しいです。
 
-## 更新履歴
+## 🔁更新履歴
 ### 2026年10月16日
 - CloudflareR2に対応
 - ギャラリーページ・作品詳細ページの画像表示ロジック変更
+
+## 🎨Janus
+Hilavaが開発したイラストサイト向けテーマです！こちらもよろしくお願いいたします！  
+
+[GitHub](https://github.com/hilava999/Janus) | [サンプルサイト](https://janus.hilavaarts.link/)
+
+## 🛠️ 開発者情報
+### Hilava
+しがない絵描きです。たまに開発もします。創作とゲームとゲーム音楽が好き。  
+テーマを使ってみてのご感想はWaveboxからお気軽にお寄せくださいね！  
+[GitHub](https://github.com/hilava999) | [X](https://x.com/hilava_gkb) | [Wavebox](https://wavebox.me/wave/6f0sa4hla3csl7op/)
